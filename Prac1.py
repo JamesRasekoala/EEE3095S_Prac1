@@ -12,46 +12,49 @@ Date: 22/07/2019
 # import Relevant Librares
 import RPi.GPIO as GPIO
 import time
-
-#initial variables
 GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+
+#button setup
 GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+#initial variables
 count = 0
 lighVal = 0
-pressed = False
+
+#LED setup
 GPIO.setup(18,GPIO.OUT)
 GPIO.setup(23,GPIO.OUT)
 GPIO.setup(24,GPIO.OUT)
-GPIO.setwarnings(False)
 
-# 
+#debouncing method for counting up
 def countup():
-	global count
-	input_state = GPIO.input(12)
+	global count	#To uses global count value in method
+	input_state = GPIO.input(12)	#button at pin 12
 	if input_state == False:
 		#count up
 		count = count+1
-		pressed = True
-		print("Count UP")
-		Config_Led(count)
-		time.sleep(1)
+		print("Count UP Pressed")	
+		Config_Led(count)	#Adjusts Led configuration
 
-#
+
+
+#debouncing method for counting down
 def countdown():
-	global count
-	input_state = GPIO.input(16)
+	global count	#To uses global count value in method
+	input_state = GPIO.input(16)	#button at pin 16
 	if input_state == False:
 		#count down
 		count = count-1
-		pressed = True
-		print("Count Down")
-		Config_Led(count)
-		time.sleep(1)
+		print("Count Down Pressed")
+		Config_Led(count)	#Adjusts Led configuration
+
+
 
 #count limitations
 def check_counter(counter):
-	global count
+	global count	#To uses global count value in method
 	counter = count
 	if (count==-1):
 		count = 7 # if less than 0 set to 7
@@ -71,64 +74,54 @@ def Config_Led(counter):
 		GPIO.output(18,False)
 		GPIO.output(23,False)
 		GPIO.output(24,False)
-		pressed = False
-		print("0")
+		print(counter)
 		
 	elif(counter == 1):
 		GPIO.output(18,True)
 		GPIO.output(23,False)
 		GPIO.output(24,False)
-		pressed =False
-		print("1")
+		print(counter)
 		
 	elif(counter == 2):
 		GPIO.output(18,False)
 		GPIO.output(23,True)
 		GPIO.output(24,False)
-		pressed = False
-		print("2")
+		print(counter)
 
 		
 	elif(counter == 3):
 		GPIO.output(18,True)
 		GPIO.output(23,True)
 		GPIO.output(24,False)
-		pressed = False
-		print("3")
+		print(counter)
 		
 	elif(counter == 4):
 		GPIO.output(18,False)
 		GPIO.output(23,False)
 		GPIO.output(24,True)
-		pressed = False
-		print("4")
+		print(counter)
 		
 		
 	elif(counter == 5):
 		GPIO.output(18,True)
 		GPIO.output(23,False)
 		GPIO.output(24,True)
-		pressed = False
-		print("5")
+		print(counter)
 
 	elif(counter == 6):
 		GPIO.output(18,False)
 		GPIO.output(23,True)
 		GPIO.output(24,True)
-		pressed = False
-		print("6")
+		print(counter)
 		
 	elif(counter == 7):
 		GPIO.output(18,True)
 		GPIO.output(23,True)
 		GPIO.output(24,True)
-		pressed = False
-		print("7")
+		print(counter)
 
-#GPIO.add_event_detect(12, GPIO.FALLING, callback=countup, bouncetime = 300)
-#GPIO.add_event_detect(16, GPIO.FALLING, callback=countdown, bouncetime = 300)
 
-# Logic that you write
+
 def main():
 	countup()
 	countdown()
