@@ -1,12 +1,10 @@
 #!/usr/bin/python3
 """
-Python Practical Template
-Keegan Crankshaw
-Readjust this Docstring as follows:
 Names: James Rasekoala
 Student Number: RSKJAM001
-Prac: Prac 1
+Prac: EEE3095S Prac 1
 Date: 22/07/2019
+
 """
 
 # import Relevant Librares
@@ -21,7 +19,6 @@ GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 #initial variables
 count = 0
-lighVal = 0
 
 #LED setup
 GPIO.setup(18,GPIO.OUT)
@@ -33,11 +30,10 @@ def countup():
 	global count	#To uses global count value in method
 	input_state = GPIO.input(12)	#button at pin 12
 	if input_state == False:
-		#count up
+		#count up increment
 		count = count+1
 		print("Count UP Pressed")	
 		Config_Led(count)	#Adjusts Led configuration
-
 
 
 #debouncing method for counting down
@@ -45,11 +41,10 @@ def countdown():
 	global count	#To uses global count value in method
 	input_state = GPIO.input(16)	#button at pin 16
 	if input_state == False:
-		#count down
+		#count down decrement
 		count = count-1
 		print("Count Down Pressed")
 		Config_Led(count)	#Adjusts Led configuration
-
 
 
 #count limitations
@@ -61,7 +56,6 @@ def check_counter(counter):
 	elif(count==8):
 		count = 0 # if grater than 7 set to 0
 		# if value within bounds it will continue 
-
 
 
 #Method to display counter binary LED configuration		
@@ -76,12 +70,14 @@ def Config_Led(counter):
 		GPIO.output(24,False)
 		print(counter)
 		
+
 	elif(counter == 1):
 		GPIO.output(18,True)
 		GPIO.output(23,False)
 		GPIO.output(24,False)
 		print(counter)
 		
+
 	elif(counter == 2):
 		GPIO.output(18,False)
 		GPIO.output(23,True)
@@ -95,6 +91,7 @@ def Config_Led(counter):
 		GPIO.output(24,False)
 		print(counter)
 		
+
 	elif(counter == 4):
 		GPIO.output(18,False)
 		GPIO.output(23,False)
@@ -108,25 +105,26 @@ def Config_Led(counter):
 		GPIO.output(24,True)
 		print(counter)
 
+
 	elif(counter == 6):
 		GPIO.output(18,False)
 		GPIO.output(23,True)
 		GPIO.output(24,True)
 		print(counter)
 		
+
 	elif(counter == 7):
 		GPIO.output(18,True)
 		GPIO.output(23,True)
 		GPIO.output(24,True)
 		print(counter)
 
-
-
 def main():
-	countup()
+	
 	countdown()
+	countup()
 
-# Only run the functions if 
+
 if __name__ == "__main__":
     # Make sure the GPIO is stopped correctly
     try:
